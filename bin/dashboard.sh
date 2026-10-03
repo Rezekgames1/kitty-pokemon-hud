@@ -32,21 +32,28 @@ done
 
 uptime_text="$(uptime | sed -E 's/^.*up +//; s/, +[0-9]+ users?.*$//')"
 kitty_version="$(kitty --version | awk '{print $2}')"
-lan_iface="$(route -n get default 2>/dev/null | awk '/interface:/{print $2; exit}')"
-lan_ip="$(ipconfig getifaddr "$lan_iface" 2>/dev/null || true)"
-[[ -n "$lan_ip" ]] || lan_ip="offline"
+if [[ "${POKEMON_HUD_DEMO:-0}" == "1" ]]; then
+  lan_iface="en0"
+  lan_ip="192.168.1.42"
+  vpn_iface="utun4"
+  vpn_ip="10.8.0.2"
+else
+  lan_iface="$(route -n get default 2>/dev/null | awk '/interface:/{print $2; exit}')"
+  lan_ip="$(ipconfig getifaddr "$lan_iface" 2>/dev/null || true)"
+  [[ -n "$lan_ip" ]] || lan_ip="offline"
 
-vpn_iface=""
-vpn_ip=""
-for iface in $(ifconfig -l | tr ' ' '\n' | awk '/^utun[0-9]+$/'); do
-  address="$(ifconfig "$iface" 2>/dev/null | awk '/inet / && $2 != "127.0.0.1" {print $2; exit}')"
-  if [[ -n "$address" ]]; then
-    vpn_iface="$iface"
-    vpn_ip="$address"
-    break
-  fi
-done
-[[ -n "$vpn_ip" ]] || vpn_ip="offline"
+  vpn_iface=""
+  vpn_ip=""
+  for iface in $(ifconfig -l | tr ' ' '\n' | awk '/^utun[0-9]+$/'); do
+    address="$(ifconfig "$iface" 2>/dev/null | awk '/inet / && $2 != "127.0.0.1" {print $2; exit}')"
+    if [[ -n "$address" ]]; then
+      vpn_iface="$iface"
+      vpn_ip="$address"
+      break
+    fi
+  done
+  [[ -n "$vpn_ip" ]] || vpn_ip="offline"
+fi
 
 card_inner_width=41
 repeat_rule() {

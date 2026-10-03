@@ -19,7 +19,9 @@ if [[ "${TERM:-}" == "xterm-kitty" && -n "${KITTY_WINDOW_ID:-}" && -z "${SSH_CON
   setopt prompt_subst
   zstyle ':vcs_info:git:*' formats ' %F{magenta}git:%b%f'
   add-zsh-hook precmd vcs_info
-  PROMPT='%F{cyan}╭─%F{blue}%n%F{yellow}⚡%F{blue}%m%f %F{green}%~%f${vcs_info_msg_0_}
+  POKEMON_HUD_PROMPT_USER="${POKEMON_HUD_PROMPT_USER:-%n}"
+  POKEMON_HUD_PROMPT_HOST="${POKEMON_HUD_PROMPT_HOST:-%m}"
+  PROMPT='%F{cyan}╭─%F{blue}${POKEMON_HUD_PROMPT_USER}%F{yellow}⚡%F{blue}${POKEMON_HUD_PROMPT_HOST}%f %F{green}%~%f${vcs_info_msg_0_}
 %F{cyan}╰─%F{magenta}❯%f '
   RPROMPT='%F{cyan}%*%f'
 
