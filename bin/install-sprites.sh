@@ -3,7 +3,7 @@
 set -euo pipefail
 
 install_dir="${POKEMON_TERMINAL_HOME:-$HOME/.config/pokemon-terminal}"
-fps="${POKEMON_FPS:-6}"
+fps="${POKEMON_FPS:-8}"
 force=0
 [[ "${1:-}" == "--force" ]] && force=1
 

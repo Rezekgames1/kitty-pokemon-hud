@@ -9,7 +9,7 @@ config_file="$base_dir/config"
 [[ -r "$config_file" ]] && source "$config_file"
 
 POKEMON_NAME="${POKEMON_NAME:-gengar}"
-POKEMON_FPS="${POKEMON_FPS:-6}"
+POKEMON_FPS="${POKEMON_FPS:-8}"
 POKEMON_WIDTH="${POKEMON_WIDTH:-20}"
 POKEMON_HEIGHT="${POKEMON_HEIGHT:-10}"
 POKEMON_LEFT="${POKEMON_LEFT:-1}"
